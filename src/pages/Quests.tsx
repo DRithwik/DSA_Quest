@@ -176,107 +176,131 @@ const Quests = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0c10] text-foreground flex flex-col font-sans selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#080810] text-foreground flex flex-col font-body selection:bg-cyan-500/30 overflow-x-hidden">
       {/* Background decoration */}
       <PageBackground />
+      <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
+
+      {/* Floating Elements */}
+      <div className="absolute top-[10%] left-[5%] w-[500px] h-[500px] bg-violet-600/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[10%] right-[5%] w-[400px] h-[400px] bg-cyan-600/10 blur-[100px] rounded-full pointer-events-none" />
 
       <MarketingNavbar />
 
       <div className="relative z-10 pt-32 pb-24 px-6 max-w-7xl mx-auto w-full">
         {/* Header */}
-        <div className="mb-16 space-y-6 text-center md:text-left">
-          <div className="flex items-center gap-4 justify-center md:justify-start">
-            <div className="p-3 bg-violet-500/10 rounded-2xl border border-violet-500/20 shadow-xl shadow-violet-500/10">
-              <Map className="h-8 w-8 text-violet-400" />
+        <div className="mb-20 space-y-6 text-center md:text-left">
+          <div className="flex items-center gap-5 justify-center md:justify-start">
+            <div className="p-4 bg-violet-500/10 rounded-2xl border border-violet-500/20 shadow-[0_0_30px_rgba(139,92,246,0.2)] backdrop-blur-xl">
+              <Map className="h-10 w-10 text-violet-400" />
             </div>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase font-display italic leading-none">
-              Quest <span className="text-muted-foreground/30">Board</span>
-            </h1>
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[0.5em] text-violet-400/80 mb-2">Algorithm Cartography</p>
+              <h1 className="text-5xl md:text-8xl font-black tracking-tighter uppercase font-display italic leading-none text-white drop-shadow-2xl">
+                Quest <span className="text-white/20">Board</span>
+              </h1>
+            </div>
           </div>
-          <p className="text-muted-foreground text-lg md:text-xl font-medium max-w-2xl font-body leading-relaxed mx-auto md:mx-0">
-            Venture into the Array Realms and DP Mountains. Solve problems, accumulate XP, and ascend the algorithm hierarchy.
+          <p className="text-slate-400 text-lg md:text-xl font-medium max-w-2xl font-body leading-relaxed mx-auto md:mx-0">
+            Navigate the sacred geometry of <span className="text-violet-400">Codelandia</span>. Solve the ancient puzzles of the Array Realms and ascend to the DP Mountains.
           </p>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-3 mb-12 justify-center md:justify-start">
+        <div className="flex flex-wrap gap-4 mb-14 justify-center md:justify-start">
           {["ALL", "EASY", "MEDIUM", "HARD"].map((d) => (
             <button
               key={d}
               onClick={() => setFilter(d as any)}
-              className={`px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] border transition-all duration-300
+              className={`px-10 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] border transition-all duration-500 relative group
                 ${filter === d
-                  ? "bg-violet-600 border-violet-500 text-white shadow-lg shadow-violet-500/40 scale-105"
-                  : "bg-white/5 border-white/10 text-muted-foreground hover:bg-white/10 hover:border-white/20 hover:text-white"}`}
+                  ? "bg-violet-600 border-violet-400 text-white shadow-[0_0_25px_rgba(139,92,246,0.4)] scale-105 z-10"
+                  : "bg-white/5 border-white/10 text-slate-500 hover:bg-white/10 hover:border-white/20 hover:text-white"}`}
             >
+              {filter === d && (
+                <div className="absolute -inset-1 bg-violet-500/20 blur-md rounded-2xl -z-10" />
+              )}
               {d}
             </button>
           ))}
         </div>
 
         {/* Quest Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filtered.map((q) => (
             <div
               key={q.id}
               onClick={() => openEditor(q)}
-              className={`group relative p-8 rounded-[2rem] bg-white/[0.02] border backdrop-blur-3xl transition-all duration-500 flex flex-col gap-6 overflow-hidden
+              className={`group relative p-8 rounded-[2.5rem] bg-[#0c0c16]/80 border transition-all duration-500 flex flex-col gap-6 overflow-hidden backdrop-blur-md
                 ${q.status === "LOCKED"
-                  ? "opacity-50 border-white/5 cursor-not-allowed"
-                  : "border-white/10 hover:bg-white/[0.05] hover:border-violet-500/50 cursor-pointer hover:shadow-2xl hover:shadow-violet-500/10 hover:-translate-y-2 active:scale-95"}`}
+                  ? "opacity-40 border-white/5 cursor-not-allowed grayscale"
+                  : "border-white/10 hover:bg-white/[0.04] hover:border-violet-500/40 cursor-pointer hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] hover:-translate-y-3 active:scale-[0.98]"}`}
             >
               {/* Background Glow Overlay */}
-              <div className="absolute -top-12 -right-12 w-32 h-32 bg-violet-500/5 blur-[50px] group-hover:bg-violet-500/10 transition-colors rounded-full" />
+              <div className="absolute -top-12 -right-12 w-48 h-48 bg-violet-600/10 blur-[60px] group-hover:bg-violet-600/20 transition-all rounded-full" />
+              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-cyan-600/5 blur-[50px] group-hover:bg-cyan-600/10 transition-all rounded-full" />
 
               <div className="flex justify-between items-start">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl shadow-inner transition-transform group-hover:scale-110 group-hover:rotate-6">
+                <div className="flex items-center gap-5">
+                  <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 bg-gradient-to-br from-white/10 to-transparent">
                     {q.icon}
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/60">{q.realm}</p>
-                    <h3 className="text-xl font-black tracking-tight text-white group-hover:text-cyan-400 transition-colors">{q.title}</h3>
+                    <p className="text-[9px] font-black uppercase tracking-[0.4em] text-violet-400/60 mb-1">{q.realm}</p>
+                    <h3 className="text-2xl font-black tracking-tighter text-white group-hover:text-cyan-400 transition-colors font-display italic">{q.title}</h3>
                   </div>
                 </div>
-                {STATUS_ICONS[q.status]}
+                <div className="relative">
+                   {STATUS_ICONS[q.status]}
+                   {q.status !== "LOCKED" && (
+                     <div className="absolute -inset-2 bg-current opacity-0 group-hover:opacity-20 blur-xl transition-opacity rounded-full" style={{ color: q.color === 'emerald' ? '#10b981' : '#f59e0b' }} />
+                   )}
+                </div>
               </div>
 
-              <p className="text-sm font-body text-muted-foreground leading-relaxed h-[3rem] overflow-hidden">
+              <p className="text-[13px] font-body text-slate-400 leading-relaxed h-[3.5rem] overflow-hidden">
                 {q.desc}
               </p>
 
-              <div className="h-px w-full bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+              <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-              <div className="flex items-center justify-between mt-auto">
+              <div className="flex items-center justify-between mt-auto pt-2">
                 <div className="flex items-center gap-4">
-                  <span className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border ${DIFF_COLORS[q.difficulty]}`}>
+                  <span className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest border backdrop-blur-xl ${DIFF_COLORS[q.difficulty]}`}>
                     {q.difficulty}
                   </span>
                   <div className="flex flex-col">
-                    <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-black uppercase tracking-widest">
-                      <Clock className="h-3 w-3" /> {q.time}
+                    <div className="flex items-center gap-2 text-[10px] text-slate-500 font-black uppercase tracking-widest font-mono-code transition-colors group-hover:text-slate-300">
+                      <Clock className="h-3.5 w-3.5 text-cyan-400" /> {q.time}
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center border border-white/5 group-hover:border-violet-500/50 transition-colors">
-                    <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-white group-hover:translate-x-1 transition-all" />
+                  <div className="h-10 w-10 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-violet-500/50 transition-all group-hover:bg-violet-500/20 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]">
+                    <ChevronRight className="h-5 w-5 text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-all" />
                   </div>
                 </div>
               </div>
 
-              {/* Bottom stats overlay */}
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-violet-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              {/* Bottom Progress Bar Simulation */}
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/5 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-transparent via-violet-500 to-transparent w-full -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+              </div>
             </div>
           ))}
         </div>
 
         {/* Empty State / Coming Soon */}
-        <div className="mt-20 p-12 rounded-[2.5rem] bg-white/[0.01] border border-white/5 border-dashed flex flex-col items-center gap-4 text-center">
-          <Sparkles className="h-8 w-8 text-muted-foreground/20" />
-          <div>
-            <p className="text-sm font-black uppercase tracking-[0.3em] text-muted-foreground/40">Expansion Protocol</p>
-            <p className="text-xs text-muted-foreground/30 font-body mt-2">New realms and harder quests are currently being generated by our AI core.</p>
+        <div className="mt-24 p-16 rounded-[3rem] bg-white/[0.015] border border-white/10 border-dashed flex flex-col items-center gap-6 text-center backdrop-blur-xl relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="p-5 bg-white/5 rounded-3xl border border-white/10 shadow-2xl relative">
+            <Sparkles className="h-10 w-10 text-violet-400/40 animate-pulse" />
+          </div>
+          <div className="relative space-y-3">
+            <p className="text-xs font-black uppercase tracking-[0.5em] text-violet-400/40 font-display">Expansion Protocol Stage 2</p>
+            <p className="text-sm text-slate-500 font-body max-w-md mx-auto leading-relaxed">
+              New algorithmic realms and legendary boss quests are currently being whispered into existence by the AI core.
+            </p>
           </div>
         </div>
       </div>

@@ -72,6 +72,26 @@
   }
 }
 
+@layer utilities {
+  .grid-bg {
+    background-image: 
+      radial-gradient(circle at 1.5px 1.5px, rgba(255, 255, 255, 0.05) 1.5px, transparent 0);
+    background-size: 32px 32px;
+  }
+}
+
+.font-display {
+  font-family: 'DM Sans', sans-serif;
+}
+
+.font-body {
+  font-family: 'DM Sans', sans-serif;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
 @layer base {
   * {
     @apply border-border;
