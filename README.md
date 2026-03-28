@@ -127,7 +127,7 @@ Includes:
 ---
 
 ##  Setup Instructions
-### 2. Install Dependencies
+###  Install Dependencies
 ```bash
 npm install
 ### 1. Clone Repository
