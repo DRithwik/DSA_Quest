@@ -229,3 +229,19 @@
 2026-03-28 10:39:36,890 - INFO - 127.0.0.1 - - [28/Mar/2026 10:39:36] "GET /api/runs/mocked-mlc-run HTTP/1.1" 200 -
 2026-03-28 10:53:01,084 - INFO - 127.0.0.1 - - [28/Mar/2026 10:53:01] "GET /api/runs/mocked-mlc-run HTTP/1.1" 200 -
 2026-03-28 10:53:23,397 - INFO - 127.0.0.1 - - [28/Mar/2026 10:53:23] "GET /api/analyze/stream?git_url=test HTTP/1.1" 200 -
+2026-03-28 13:19:51,135 - INFO - Output parsers for directory and file analysis initialized.
+2026-03-28 13:20:01,454 - INFO - LLM initialized with model gemini-2.5-flash.
+2026-03-28 13:20:01,455 - INFO - LLM initialized with model gemini-2.5-flash.
+2026-03-28 13:20:02,427 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.165.50.143:5000
+2026-03-28 13:20:02,432 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-28 13:20:02,440 - INFO -  * Restarting with stat
+2026-03-28 13:20:12,612 - INFO - Output parsers for directory and file analysis initialized.
+2026-03-28 13:20:18,611 - INFO - LLM initialized with model gemini-2.5-flash.
+2026-03-28 13:20:18,612 - INFO - LLM initialized with model gemini-2.5-flash.
+2026-03-28 13:20:18,740 - WARNING -  * Debugger is active!
+2026-03-28 13:20:18,754 - INFO -  * Debugger PIN: 105-310-457
+2026-03-28 13:20:49,859 - INFO - 127.0.0.1 - - [28/Mar/2026 13:20:49] "GET /api/analyze/stream?git_url=https://github.com/DRithwik/mlc HTTP/1.1" 200 -
+2026-03-28 13:21:02,023 - INFO - 127.0.0.1 - - [28/Mar/2026 13:21:02] "GET /api/runs/mocked-mlc-run HTTP/1.1" 200 -

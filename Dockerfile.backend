@@ -1,0 +1,23 @@
+FROM python:3.11-slim
+
+# Install git since the python backend uses subprocess.run(["git", "clone"...])
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy requirements first for better Docker layer caching
+COPY backend/requirements.txt ./backend/
+
+# Install python dependencies and gunicorn (production WSGI server)
+RUN pip install --no-cache-dir -r backend/requirements.txt gunicorn
+
+# Copy backend source code into /app/backend
+COPY backend ./backend
+
+# The PORT environment variable is automatically set by Render/Railway
+ENV PORT=5000
+EXPOSE $PORT
+
+# Start server with gunicorn, matching the root level import statements (e.g. `from backend...`)
+# Using a 120s timeout to allow heavy LangGraph analysis requests to complete without timing out early.
+CMD gunicorn backend.api_server:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1 --threads 4

@@ -1,0 +1,23 @@
+services:
+  # Python Backend Serverless Deployment
+  - type: web
+    name: ml-analysis-backend
+    env: docker
+    dockerfilePath: ./Dockerfile.backend
+    plan: starter # Up to 512MB RAM — suitable for simple models, use higher tier if heavy models used
+    # 1. Provide an environment mapping
+    envVars:
+      - key: PORT
+        value: "5000"
+      - key: MONGO_URI # Must be set in the Render Dashboard Settings to an Atlas URL
+        sync: false
+      - key: MONGO_DB
+        value: "analysis_agent"
+      - key: GOOGLE_API_KEY # (Optional) Might be needed by langchain-google-genai
+        sync: false
+
+    # 2. Tell Render it takes time to start/respond
+    headers:
+      - path: /*
+        name: Access-Control-Allow-Origin
+        value: "*"

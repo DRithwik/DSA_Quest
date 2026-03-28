@@ -738,15 +738,15 @@ function ArticleModal({ article, section, onClose }: { article: any; section: an
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className={\`p-6 border-b border-white/5 bg-gradient-to-r \${c.badge}\`}>
+        <div className={`p-6 border-b border-white/5 bg-gradient-to-r ${c.badge}`}>
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2 mb-2">
-                <span className={\`text-xs font-black uppercase tracking-widest \${c.text}\`}>{section.title}</span>
+                <span className={`text-xs font-black uppercase tracking-widest ${c.text}`}>{section.title}</span>
               </div>
               <h2 className="text-xl font-black text-white">{article.title}</h2>
               <div className="flex items-center gap-3">
-                <span className={\`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border \${BADGE_STYLE[article.badge]}\`}>{article.badge}</span>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${BADGE_STYLE[article.badge]}`}>{article.badge}</span>
                 <span className="flex items-center gap-1 text-xs text-muted-foreground"><Clock className="h-3 w-3" />{article.readTime} read</span>
               </div>
             </div>
@@ -809,7 +809,7 @@ const Docs = () => {
 
   return (
     <div className="min-h-screen bg-[#080810] text-foreground flex flex-col" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-      <style>{\`
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,900;1,9..40,900&family=JetBrains+Mono:wght@400;600&display=swap');
         * { font-family: 'DM Sans', sans-serif; }
         code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
@@ -824,7 +824,7 @@ const Docs = () => {
                             linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
           background-size: 40px 40px;
         }
-      \`}</style>
+      `}</style>
 
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-[#080810]/80 backdrop-blur-2xl border-b border-white/[0.06]">
@@ -836,7 +836,7 @@ const Docs = () => {
         </Link>
         <div className="hidden md:flex items-center gap-6 text-sm font-semibold text-muted-foreground">
           {["Quests", "Arena", "Leaderboard"].map(label => (
-            <Link key={label} to={\`/explore/\${label.toLowerCase()}\`} className="hover:text-white transition-colors">{label}</Link>
+            <Link key={label} to={`/explore/${label.toLowerCase()}`} className="hover:text-white transition-colors">{label}</Link>
           ))}
           <Link to="/explore/docs" className="text-sky-400">Docs</Link>
         </div>
@@ -854,7 +854,7 @@ const Docs = () => {
 
       <div className="flex pt-[57px] min-h-screen">
         {/* Sidebar */}
-        <aside className={\`\${mobileMenuOpen ? 'flex' : 'hidden'} md:flex w-64 flex-col fixed top-[57px] left-0 bottom-0 z-40 border-r border-white/[0.06] bg-[#080810]/95 backdrop-blur-xl overflow-y-auto\`}>
+        <aside className={`${mobileMenuOpen ? 'flex' : 'hidden'} md:flex w-64 flex-col fixed top-[57px] left-0 bottom-0 z-40 border-r border-white/[0.06] bg-[#080810]/95 backdrop-blur-xl overflow-y-auto`}>
           <div className="p-4 space-y-4">
             <SearchBar onSearch={setSearchQuery} />
             <div className="flex items-center justify-between px-1">
@@ -870,11 +870,11 @@ const Docs = () => {
                 <button
                   key={s.id}
                   onClick={() => { setActive(s.id); setSearchQuery(''); setMobileMenuOpen(false); }}
-                  className={\`sidebar-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-left \${
+                  className={`sidebar-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-left ${
                     isActive
-                      ? \`\${sc.bg} \${sc.text} \${sc.border} border\`
+                      ? `${sc.bg} ${sc.text} ${sc.border} border`
                       : "text-muted-foreground hover:bg-white/[0.04] hover:text-white border border-transparent"
-                  }\`}
+                  }`}
                 >
                   <span className={isActive ? sc.text : "text-muted-foreground"}>{s.icon}</span>
                   <span>{s.title}</span>
@@ -899,7 +899,7 @@ const Docs = () => {
                   const sc = COLOR_MAP[section.color];
                   return (
                     <div key={section.id}>
-                      <div className={\`flex items-center gap-2 mb-3 text-sm font-black uppercase tracking-wider \${sc.text}\`}>
+                      <div className={`flex items-center gap-2 mb-3 text-sm font-black uppercase tracking-wider ${sc.text}`}>
                         <span className={sc.text}>{section.icon}</span> {section.title}
                       </div>
                       <div className="space-y-3">
@@ -916,10 +916,10 @@ const Docs = () => {
             // Section view
             <div className="max-w-3xl mx-auto px-6 md:px-10 py-12">
               {/* Section header */}
-              <div className={\`mb-10 p-8 rounded-2xl border bg-gradient-to-br \${c.badge} grid-bg relative overflow-hidden\`}>
-                <div className={\`absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl \${c.bg} opacity-40 -translate-y-4 translate-x-4\`} />
+              <div className={`mb-10 p-8 rounded-2xl border bg-gradient-to-br ${c.badge} grid-bg relative overflow-hidden`}>
+                <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl ${c.bg} opacity-40 -translate-y-4 translate-x-4`} />
                 <div className="relative">
-                  <div className={\`inline-flex items-center justify-center w-12 h-12 rounded-2xl \${c.bg} \${c.border} border mb-4 shadow-lg \${c.glow}\`}>
+                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-2xl ${c.bg} ${c.border} border mb-4 shadow-lg ${c.glow}`}>
                     <span className={c.text}>{activeSection.icon}</span>
                   </div>
                   <h1 className="text-3xl font-black text-white mb-1">{activeSection.title}</h1>
@@ -1004,15 +1004,15 @@ function ArticleCard({ article, section, onClick }: { article: any; section: any
         <div className="space-y-1.5 flex-1 min-w-0">
           <div className="flex items-center gap-2.5 flex-wrap">
             <h3 className="font-black text-[15px] text-slate-200 group-hover:text-white transition-colors">{article.title}</h3>
-            <span className={\`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border \${BADGE_STYLE[article.badge]}\`}>
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${BADGE_STYLE[article.badge]}`}>
               {article.badge}
             </span>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{article.desc}</p>
         </div>
         <div className="flex flex-col items-end gap-2 flex-shrink-0">
-          <div className={\`p-1.5 rounded-lg \${c.bg} \${c.border} border group-hover:scale-110 transition-transform\`}>
-            <ChevronRight className={\`h-3.5 w-3.5 \${c.text}\`} />
+          <div className={`p-1.5 rounded-lg ${c.bg} ${c.border} border group-hover:scale-110 transition-transform`}>
+            <ChevronRight className={`h-3.5 w-3.5 ${c.text}`} />
           </div>
           <span className="flex items-center gap-1 text-[11px] text-muted-foreground whitespace-nowrap">
             <Clock className="h-3 w-3" />{article.readTime}
