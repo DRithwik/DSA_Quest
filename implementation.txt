@@ -1,0 +1,47 @@
+Implementation summary — one-paragraph per file
+Generated: 2025-10-30
+
+backend/api_server.py
+This module exposes a small Flask REST API used as the project's HTTP surface for health checks and project analysis orchestration: it defines endpoints to check service liveness, trigger an analysis run for a given path, list stored runs, fetch the stored file tree and per-file analyses, and return extracted dependency lists. On analyze requests it validates input, constructs an initial ExplorerState, invokes the compiled langgraph analysis_app to run the pipeline, and then persists the result via the mongo_store utilities; the file is intentionally lightweight and delegates heavy-lifting to backend.graph and backend.mongo_store, making it the integration glue between HTTP clients and the analysis backend. The health endpoint is smoke-tested, while more complex analyze/store behavior is covered by integration or mocked tests.
+
+backend/graph.py
+This module composes the analysis workflow using langgraph StateGraph primitives: it imports node functions (listing, deciding, cleaning, tree building, file reading, analysis, and dependency extraction), wires them into a directed graph with conditional transitions and loop points, and compiles the graph to an app object that can be invoked programmatically. The graph defines control flow and node invocation order but delegates node logic to backend.nodes; it provides a single invocation surface (analysis_app.invoke(state)) so the same pipeline can be executed from the Flask endpoint, CLI, or tests. The graph benefits from node-level unit tests and is a good place for a short smoke test that runs a small synthetic state through the compiled pipeline.
+
+backend/main.py
+main.py implements a command-line runner for the compiled graph intended for manual or scripted local runs: it prompts (or accepts CLI input) for a directory path, constructs the initial ExplorerState, invokes the analysis_app, writes the resulting JSON to result.json, and optionally calls mongo_store.store_state to persist the outcome. The file is primarily a developer convenience for running the full pipeline without HTTP; because it's interactive it currently has no automated unit tests, and adding non-interactive flags would make it easier to include in CI-driven end-to-end scenarios.
+
+backend/nodes.py
+This is the core processing library containing the pipeline nodes and supporting utilities: it implements file system enumeration, the LLM-driven directory decider, junk removal, directory-tree construction, resilient file reading, code cleaning, the analyzer that invokes the FA_parser, and post-processing extractors. Each node accepts and returns the shared ExplorerState dict and encapsulates a single responsibility (for example, FileReader reads and cleans files, Analyzer composes prompts and parses LLM outputs into structured FileAnalysis). Nodes are written for resilience (reads log and return empty content rather than crash) and are the principal target of unit tests validating both happy paths and error handling across small, focused functions.
+
+backend/parsers.py
+This module defines the Pydantic models that represent DirectoryExplorerOutput, FileAnalysis, Issue, and BasicImprovement, and it constructs LangChain PydanticOutputParser wrappers to parse LLM responses into those structured types. The parsers enforce a strict contract: conformant LLM outputs become typed objects consumed downstream, while malformed or incomplete outputs raise parse errors; that strictness is used by tests to validate parser behavior and by negative tests to ensure the system handles unexpected LLM text in a controlled fashion.
+
+backend/mongo_store.py
+This file centralizes persistence concerns: generate_project_id deterministically derives a stable identifier from the analysis state (preferring a repository/root path when available and otherwise hashing a normalized JSON fingerprint), while store_state sanitizes Python-native types (converting sets/tuples to lists), upserts the document into MongoDB, and tracks version/history metadata. The module isolates all pymongo usage so unit tests can exercise ID generation without a DB and integration tests can later use mongomock or a test Mongo container to validate the full storage lifecycle.
+
+backend/llmconfig.py
+This configuration module initializes and exposes the project LLM client (e.g., a LangChain-compatible Google generative connector) using environment-driven configuration (such as GOOGLE_API_KEY). By centralizing client creation here the rest of the codebase can import a single `llm` instance and tests can swap in deterministic stubs or mocks to avoid real network calls during unit runs.
+
+backend/state.py
+This module defines the shape of the shared ExplorerState (via TypedDict or equivalent) used across nodes and the graph: it documents keys like root, current_path, to_visit, directory_graph, decision, remove, dependencies, and Technical_requirements, providing a single authoritative contract for in-flight pipeline data. Having a declared state shape reduces coupling, improves readability, and makes tests clearer about the data each node expects and produces.
+
+backend/codeFormatter.py
+A small utility that implements a simple code-formatting round trip by writing the supplied code to formatted_code.txt and reading it back; it acts as a placeholder for a more sophisticated formatter and is used by the analyzer to simulate a formatting step. The function is intentionally simple and unit-tested for string inputs; it’s straightforward to replace with a real formatter (or invoke an external tool) without changing analyzer semantics.
+
+backend/tests/conftest.py
+Pytest configuration and runtime hooks live here: the module registers hooks that print attached test metadata before each test and emit richer test results after each run (via pytest_runtest_setup and pytest_runtest_makereport). These hooks support enhanced, human-readable test logging (used when running pytest with -s) and integrate with the metadata_decorator to surface test inputs, expected outputs, and actual outputs inline during test execution.
+
+backend/tests/test_helpers.py
+A helper module providing metadata_decorator, which test authors use to attach structured metadata (description, input, expected) to test functions. It is deliberately not named with a test_ prefix so pytest won't collect it as a test; this helper standardizes inline test documentation and enables the conftest hooks to print meaningful per-test context during runs.
+
+backend/tests/test_api_server.py
+A focused smoke test that exercises the Flask app’s health endpoint using Flask’s built-in test client; this test validates the API wiring and serialization for the simplest endpoint and acts as a regression check for HTTP routing without touching external systems like the database or LLM.
+
+backend/tests/test_mongo_store.py
+Unit tests centered on mongo_store.generate_project_id that validate both the normal path-based ID generation and the fallback hash-of-state behavior; these tests purposely avoid requiring a running MongoDB so they remain fast and deterministic for unit test runs.
+
+backend/tests/test_nodes_functions.py
+A comprehensive collection of unit tests that exercise the pure functions and node behaviors in nodes.py (including listing, cleaning, tree construction, file reading behavior, clean_code, and parser round-trip logic). These tests constitute the primary guarantee that node-level logic behaves correctly across common and edge-case inputs without needing network or DB access.
+
+backend/tests/test_negative_cases.py
+An adversarial test suite that intentionally triggers negative conditions (malformed parser output, binary file reads, directory-read attempts, permission error simulations, and non-serializable state objects). Several tests are marked xfail to document and track expected failure modes; a subset were toggled to strict xfail to enforce behavior, which revealed cases where the implementation already handled the condition (resulting in XPASS) and thus surfaced the need to either tighten tests or change the code semantics.

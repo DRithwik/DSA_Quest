@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  xp        Int      @default(0)
+  level     Int      @default(1)
+  elo       Int      @default(1000)
+  bio       String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  quests    QuestProgress[]
+  matches   Match[]         @relation("PlayerMatches")
+  wins      Match[]         @relation("WinnerMatches")
+}
+
+model Quest {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  difficulty  String   // EASY, MEDIUM, HARD
+  baseXP      Int
+  content     Json     // Dynamic problem data
+  createdAt   DateTime @default(now())
+
+  progress    QuestProgress[]
+}
+
+model QuestProgress {
+  id        String   @id @default(uuid())
+  userId    String
+  questId   String
+  status    String   // COMPLETED, IN_PROGRESS
+  score     Int?
+  completedAt DateTime?
+  
+  user      User     @relation(fields: [userId], references: [id])
+  quest     Quest    @relation(fields: [questId], references: [id])
+
+  @@unique([userId, questId])
+}
+
+model Match {
+  id        String   @id @default(uuid())
+  player1Id String
+  player2Id String
+  winnerId  String?
+  p1Gain    Int?
+  p2Gain    Int?
+  createdAt DateTime @default(now())
+
+  player1   User     @relation("PlayerMatches", fields: [player1Id], references: [id])
+  player2   User     @relation(fields: [player2Id], references: [id])
+  winner    User?    @relation("WinnerMatches", fields: [winnerId], references: [id])
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sakshitha Chanda's Personal Blog</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+  color: #333;
+}
+
+header {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  margin: 0;
+  color: #3f51b5;
+}
+
+nav {
+  margin: 20px 0;
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #3f51b5;
+  font-weight: bold;
+}
+
+.section {
+  padding: 20px;
+  margin: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #3f51b5;
+}
+
+.academic-heading {
+  color: #4caf50;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 10px 0;
+}
+
+.skill {
+  background: #ff7e5f;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px;
+  width: 100px;
+  text-align: center;
+}
+
+.contact-form {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 30px;
+  width: 350px;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  border-color: #3f51b5;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(to right, #feb47b, #ff7e5f);
+  transform: scale(1.05);
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Sakshitha Chanda</h1>
+  <nav>
+    <a href="#about" aria-label="Go to About Me section">About Me</a>
+    <a href="#skills" aria-label="Go to Skills section">Skills</a>
+    <a href="#projects" aria-label="Go to Projects section">Projects</a>
+    <a href="#contact" aria-label="Go to Contact section">Contact</a>
+  </nav>
+</header>
+
+<section class="section" id="about">
+  <h2>About Me</h2>
+  <p>Hello! I’m a passionate Computer Science and Engineering <b>student</b> with a specialization in Artificial Intelligence and Machine Learning. My journey in technology began with a fascination for solving complex problems and creating innovative solutions. I enjoy exploring the intersection of technology and creativity, and I’m always eager to learn new skills.</p>
+  <p>In my spare time, I engage in various projects that enhance my technical abilities, from developing web applications to diving into machine learning. I believe in the power of collaboration and enjoy working in teams to tackle challenging problems. I am committed to continuous learning and professional growth, aiming to make a positive impact through technology. Welcome to my blog, where I share my thoughts, experiences, and projects!</p>
+  <h3 class="academic-heading">Academic Information</h3>
+  <ul>
+    <li><strong>Degree:</strong> Bachelor of Technology (B.Tech) in Computer Science and Engineering</li>
+    <li><strong>Specialization:</strong> Artificial Intelligence and Machine Learning</li>
+    <li><strong>University:</strong> Malla Reddy University</li>
+    <li><strong>Year of passing:</strong> 2025</li>
+    <li><strong>GPA:</strong> 8.78</li>
+  </ul>
+</section>
+
+<section class="section" id="skills">
+  <h2>Skills</h2>
+  <div class="skills">
+    <div class="skill">Java</div>
+    <div class="skill">Python</div>
+    <div class="skill">HTML</div>
+    <div class="skill">Basics of Testing</div>
+    <div class="skill">SQL</div>
+    <div class="skill">C Language</div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <h2>Projects</h2>
+  <p><strong>Paddy Leaf Disease Detection:</strong> Utilized CNN for efficient disease detection, training on a diverse Kaggle dataset.</p>
+  <p><strong>Cryptocurrency Price Prediction Using Machine Learning:</strong> Developed a web application that uses machine learning to predict cryptocurrency price trends.</p>
+  <p><strong>Text to Speech Converter:</strong> Developed a Tkinter-based converter allowing users to input text and customize voice features.</p>
+  <p><strong>Personal Blog:</strong> Created using HTML, JavaScript, and CSS, showcasing thoughts and experiences with a responsive design.</p>
+</section>
+
+<section class="section" id="contact">
+  <h2>Contact Me</h2>
+  <form class="contact-form" id="contactForm" onsubmit="sendMail(event)">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" placeholder="Your name" required>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Your email" required>
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="5" placeholder="Your message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; Sakshitha Chanda's Portfolio</p>
+</footer>
+
+<script>
+/**
+ * Handles the contact form submission by constructing a mailto link.
+ * Prevents the default form submission and redirects the user to their email client.
+ * @param {Event} event - The submit event from the form.
+ */
+function sendMail(event) {
+  event.preventDefault(); // Prevent form from submitting normally
+
+  // Get form values
+  var name = document.getElementById('name').value;
+  var email = document.getElementById('email').value;
+  var message = document.getElementById('message').value;
+
+  // Construct the mailto URL with subject and body pre-filled.
+  // NOTE: This relies on the user's local email client and is not a server-side submission.
+  // IMPORTANT: Replace 'your-actual-email@example.com' with the desired recipient email address.
+  var recipientEmail = 'your-actual-email@example.com'; 
+  var subject = encodeURIComponent('New message from ' + name);
+  var body = encodeURIComponent('You have a new message from ' + name + ' (' + email + ')\n\nMessage:\n' + message);
+
+  var mailtoLink = 'mailto:' + recipientEmail + '?subject=' + subject + '&body=' + body;
+
+  // Inform the user before redirecting
+  alert('Redirecting to your email client. Please ensure it is configured to send the message.');
+
+  // Redirect to the mailto link
+  window.location.href = mailtoLink;
+}
+</script>
+</body>
+</html>

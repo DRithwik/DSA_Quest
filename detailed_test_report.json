@@ -1,0 +1,88 @@
+{
+  "summary": {
+    "total": 29,
+    "passed": 21,
+    "failed": 5,
+    "xfailed": 3,
+    "duration_seconds": 1.83
+  },
+  "failed_tests": [
+    {
+      "id": "backend/tests/test_negative_cases.py::test_filereader_on_binary",
+      "file": "backend/tests/test_negative_cases.py",
+      "function": "nodes.FileReader",
+      "input": "binary file content",
+      "expected": "reads or skips cleanly without crash",
+      "details": "UnicodeDecodeError while reading binary file; FileReader logs error and continues"
+    },
+    {
+      "id": "backend/tests/test_negative_cases.py::test_directory_tree_with_cycle",
+      "file": "backend/tests/test_negative_cases.py",
+      "function": "nodes.DirectoryTree",
+      "input": "flat nodes with circular parent references",
+      "expected": "handle gracefully or raise clear error",
+      "details": "DirectoryTree produced a directory_graph (XPASS) — test was strict xfail so treated as failure"
+    },
+    {
+      "id": "backend/tests/test_negative_cases.py::test_generate_project_id_with_nonserializable",
+      "file": "backend/tests/test_negative_cases.py",
+      "function": "mongo_store.generate_project_id",
+      "input": "state containing non-serializable object (set)",
+      "expected": "handle/set conversion or return stable id",
+      "details": "generate_project_id sanitized sets and returned a stable id (XPASS -> treated as failure with strict xfail)"
+    },
+    {
+      "id": "backend/tests/test_negative_cases.py::test_filereader_on_directory",
+      "file": "backend/tests/test_negative_cases.py",
+      "function": "nodes.FileReader",
+      "input": "path pointing to a directory",
+      "expected": "raises or no-op without crash",
+      "details": "FileReader logged PermissionError when attempting to read directory but continued (XPASS -> failed under strict xfail)"
+    },
+    {
+      "id": "backend/tests/test_negative_cases.py::test_filereader_permission_error",
+      "file": "backend/tests/test_negative_cases.py",
+      "function": "nodes.FileReader",
+      "input": "file with no read permission",
+      "expected": "raise PermissionError or handle gracefully",
+      "details": "FileReader encountered PermissionError but did not raise; test marked strict xfail and thus failed when it XPASSed"
+    }
+  ],
+  "xfailed_tests": [
+    "backend/tests/test_negative_cases.py::test_fa_parser_on_malformed_json",
+    "backend/tests/test_negative_cases.py::test_fa_parser_on_empty_input",
+    "backend/tests/test_negative_cases.py::test_codeformatter_on_nonstring_input"
+  ],
+  "note": "Converted several negative tests to strict xfail; XPASS results are treated as failures. To accept current behavior, convert XPASSed tests into normal assertions or remove strict xfail."
+}
+{
+  "summary": {
+    "total": 21,
+    "passed": 21,
+    "failed": 0,
+    "duration_sec": 2.69
+  },
+  "tests": [
+    {"id":1,"file":"backend/tests/test_api_server.py","name":"test_health_check","purpose":"Verify /api/health returns status 'healthy'.","expected":"HTTP 200 and JSON with status 'healthy'","actual":"PASSED: endpoint returned healthy","status":"PASSED"},
+    {"id":2,"file":"backend/tests/test_mongo_store.py","name":"test_generate_project_id_from_path","purpose":"Stable SHA256 project id from path.","expected":"64-char hex sha256","actual":"PASSED","status":"PASSED"},
+    {"id":3,"file":"backend/tests/test_mongo_store.py","name":"test_generate_project_id_fallback","purpose":"Fallback SHA256 when no path present.","expected":"64-char hex sha256","actual":"PASSED","status":"PASSED"},
+    {"id":4,"file":"backend/tests/test_nodes_functions.py","name":"test_generate_project_id_from_path","purpose":"Duplicate coverage for generate_project_id.","expected":"64-char hex sha256","actual":"PASSED","status":"PASSED"},
+    {"id":5,"file":"backend/tests/test_nodes_functions.py","name":"test_generate_project_id_fallback","purpose":"Duplicate fallback coverage.","expected":"64-char hex sha256","actual":"PASSED","status":"PASSED"},
+    {"id":6,"file":"backend/tests/test_nodes_functions.py","name":"test_clean_code_indentation_true","purpose":"clean_code preserves indentation for Python-like code.","expected":"No consecutive blank lines and preserved indentation","actual":"PASSED","status":"PASSED"},
+    {"id":7,"file":"backend/tests/test_nodes_functions.py","name":"test_clean_code_indentation_false","purpose":"clean_code strips leading whitespace for non-indentation code.","expected":"Leading whitespace removed","actual":"PASSED","status":"PASSED"},
+    {"id":8,"file":"backend/tests/test_nodes_functions.py","name":"test_is_indentation_oriented_py","purpose":".py returns True.","expected":"True","actual":"PASSED","status":"PASSED"},
+    {"id":9,"file":"backend/tests/test_nodes_functions.py","name":"test_is_indentation_oriented_java","purpose":".java returns False.","expected":"False","actual":"PASSED","status":"PASSED"},
+    {"id":10,"file":"backend/tests/test_nodes_functions.py","name":"test_is_indentation_oriented_makefile","purpose":"Makefile returns True.","expected":"True","actual":"PASSED","status":"PASSED"},
+    {"id":11,"file":"backend/tests/test_nodes_functions.py","name":"test_directory_tree_builds_hierarchy","purpose":"DirectoryTree builds hierarchical structure.","expected":"directory_graph present with children","actual":"PASSED","status":"PASSED"},
+    {"id":12,"file":"backend/tests/test_nodes_functions.py","name":"test_directory_tree_multiple_roots","purpose":"Multiple roots handled.","expected":"No crash; directory_graph present","actual":"PASSED","status":"PASSED"},
+    {"id":13,"file":"backend/tests/test_nodes_functions.py","name":"test_junk_cleaner_removes_paths","purpose":"JunkCleaner removes marked paths.","expected":"Junk paths removed from root and to_visit","actual":"PASSED","status":"PASSED"},
+    {"id":14,"file":"backend/tests/test_nodes_functions.py","name":"test_junk_cleaner_noop_when_empty","purpose":"No-op when remove list empty.","expected":"State unchanged","actual":"PASSED","status":"PASSED"},
+    {"id":15,"file":"backend/tests/test_nodes_functions.py","name":"test_read_file_and_filereader","purpose":"FileReader reads file and stores content in state.","expected":"state['root'][0]['content'] contains file text","actual":"PASSED","status":"PASSED"},
+    {"id":16,"file":"backend/tests/test_nodes_functions.py","name":"test_filereader_non_indentation","purpose":"Non-indentation files cleaned correctly.","expected":"Content starts without leading indentation","actual":"PASSED","status":"PASSED"},
+    {"id":17,"file":"backend/tests/test_nodes_functions.py","name":"test_code_formatter_roundtrip","purpose":"codeFormatter returns content back.","expected":"Returned string contains input","actual":"PASSED","status":"PASSED"},
+    {"id":18,"file":"backend/tests/test_nodes_functions.py","name":"test_parsers_get_instructions","purpose":"Parsers provide format instructions.","expected":"Non-empty format instructions","actual":"PASSED","status":"PASSED"},
+    {"id":19,"file":"backend/tests/test_nodes_functions.py","name":"test_fa_parser_parses_valid_fileanalysis","purpose":"FA_parser parses FileAnalysis JSON.","expected":"Parsed model with correct file_path","actual":"PASSED","status":"PASSED"},
+    {"id":20,"file":"backend/tests/test_nodes_functions.py","name":"test_list_files_node_creates_entries","purpose":"list_files_node discovers files and folders.","expected":"Discovered file and subdir present in state['root']","actual":"PASSED","status":"PASSED"},
+    {"id":21,"file":"backend/tests/test_nodes_functions.py","name":"test_clean_code_preserves_indentation_for_python","purpose":"Ensure indentation preserved.","expected":"Cleaned string contains indentation","actual":"PASSED","status":"PASSED"}
+  ]
+}
