@@ -15,7 +15,8 @@ export const AnalysisRunner = ({ onAnalysisComplete }: { onAnalysisComplete: (pr
   const [step, setStep] = useState('');
 
   const handleAnalysis = async () => {
-    let url = 'http://localhost:5000/api/analyze/stream';
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    let url = `${API_URL}/api/analyze/stream`;
     let body: any = {};
 
     if (analysisType === 'path') {

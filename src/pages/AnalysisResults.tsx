@@ -14,7 +14,8 @@ const AnalysisResults = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/runs/${id}`)
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    fetch(`${API_URL}/api/runs/${id}`)
       .then(res => res.json())
       .then(json => {
          if (json.error) throw new Error(json.error);

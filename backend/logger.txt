@@ -242,3 +242,18 @@
 2025-10-06 11:09:09,796 - INFO -  * Detected change in 'C:\\major project\\backend\\nodes.py', reloading
 2025-10-06 11:09:12,033 - INFO -  * Restarting with stat
 2026-04-04 09:52:28,691 - INFO - Output parsers for directory and file analysis initialized.
+2026-04-04 09:52:31,587 - INFO - LLM initialized with model gemini-2.5-flash.
+2026-04-04 09:52:31,588 - INFO - LLM initialized with model gemini-2.5-flash.
+2026-04-04 09:52:31,730 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.169.65:5000
+2026-04-04 09:52:31,731 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 09:52:31,737 - INFO -  * Restarting with stat
+2026-04-04 09:52:33,674 - INFO - Output parsers for directory and file analysis initialized.
+2026-04-04 09:52:36,133 - INFO - LLM initialized with model gemini-2.5-flash.
+2026-04-04 09:52:36,133 - INFO - LLM initialized with model gemini-2.5-flash.
+2026-04-04 09:52:36,183 - WARNING -  * Debugger is active!
+2026-04-04 09:52:36,188 - INFO -  * Debugger PIN: 105-310-457
+2026-04-04 09:55:41,200 - INFO - 127.0.0.1 - - [04/Apr/2026 09:55:41] "GET /api/analyze/stream?git_url=https://github.com/DRithwik/mlc HTTP/1.1" 200 -
+2026-04-04 09:55:53,240 - INFO - 127.0.0.1 - - [04/Apr/2026 09:55:53] "GET /api/runs/mocked-mlc-run HTTP/1.1" 200 -
